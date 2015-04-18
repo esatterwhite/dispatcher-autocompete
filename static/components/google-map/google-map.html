@@ -22,14 +22,11 @@
 			,zoom:10
 			,ready: function( ){
 
-				var pyrmont = new google.maps.LatLng(this.latitude,this.longitude);
+				var geo = new google.maps.LatLng(this.latitude,this.longitude);
 				this.map = map = new google.maps.Map(this.$.map, {
-					center: pyrmont,
+					center: geo,
 					zoom:this.zoom
 				});
-			}
-			,log: function(){
-				return 1;
 			}
 			,toMap: function( ){
 				return this.map;

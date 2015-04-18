@@ -7,15 +7,16 @@
 <polymer-element name="places-autocomplete">
 	<template>
 		<style>
-		#completer{
+		.autocompleter{
 			height:30px;
 			padding-top:4px;
+			width:500px;
 		}
 		</style>
 		<link rel="stylesheet" href='./autocompleter/autocompleter.css' />
 			<core-field layout vertical left id="field">
 				<div>
-					<input placeholder="Search" id="completer" style="width:500px"></input>
+					<input placeholder="Search" id="completer" class="autocompleter"></input>
 				</div>
 				<div>
 					<google-map id="gmap" zoom="12"></google-map>
@@ -77,7 +78,7 @@
 
 							 // To add the marker to the map, call setMap();
 							 marker.setMap(that.$.gmap.map);
-							 map.map.setZoom( 13 )
+							 map.map.setZoom( 14 )
 							 map.map.panTo( token.geometry.location )
 						}.bind( this ))
 						
