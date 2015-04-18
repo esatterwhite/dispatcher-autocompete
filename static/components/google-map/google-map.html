@@ -1,0 +1,39 @@
+<link rel="import" href="/components/lib/mootools.html" />
+
+<polymer-element name="google-map" attributes="zoom latitude longitude">
+	<template>
+		<style>
+			#map{
+				width:500px;
+				height:500px;
+				display:block;
+			}
+		</style>
+		<div id="map"></div>
+	</template>
+
+	<script>
+		
+		Polymer('google-map',{
+			height:400
+			,width:400
+			,latitude:37.773972
+			,longitude:-122.431297
+			,zoom:10
+			,ready: function( ){
+
+				var pyrmont = new google.maps.LatLng(this.latitude,this.longitude);
+				this.map = map = new google.maps.Map(this.$.map, {
+					center: pyrmont,
+					zoom:this.zoom
+				});
+			}
+			,log: function(){
+				return 1;
+			}
+			,toMap: function( ){
+				return this.map;
+			}
+		})
+	</script>
+</polymer-element>

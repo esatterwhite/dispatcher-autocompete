@@ -1,0 +1,48 @@
+<link rel="import" href="../../lib/mootools.html">
+
+<script>
+Autocompleter.Places = new Class({
+	Extends:Autocompleter.Ajax
+	
+	,options:{
+		filterSubset:true
+		,postData:{
+			radius:500
+			,types:[
+			]
+		}
+	}
+
+	,initialize: function( service, location, el, options ){
+		this.parent(el, options);
+		this.request = service;
+		this.options.postData.location = location;
+		
+	}
+	,query: function( ){
+		var data = this.options.postData || {};
+		var indicator = document.id(this.options.indicator);
+		var cls = this.options.indicatorClass;
+		data[this.options.postVar] = this.queryValue;
+		
+		if (indicator){
+			indicator.setStyle('display', '');
+		}
+
+		if (cls){
+			this.element.addClass(cls);
+		}
+
+		this.fireEvent('onRequest', [this.element, this.request, data, this.queryValue]);
+
+		this.request.textSearch( data, function(results, status ){
+			this.queryResponse( results )
+		}.bind( this ))
+	}
+	,queryResponse: function( response ){
+		this.parent()
+		this.update( response )
+	}
+
+});
+</script>

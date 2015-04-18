@@ -1,0 +1,26 @@
+<link rel="import" href="../../lib/mootools.html">
+<script>
+	/**
+	 * DESCRIPTION
+	 * @class module:NAME.Thing
+	 * @param {TYPE} NAME DESCRIPTION
+	 * @example var x = new NAME.Thing({});
+	 */
+	Autocompleter.JSON = new Class(/** @lends module:NAME.Thing.prototype */{
+
+		Extends: Autocompeter.Ajax,
+
+		initialize: function(el, url, options) {
+			this.parent(el, options);
+			this.request = new Request.JSON(Object.merge({
+				'url': url,
+				'link': 'cancel'
+			}, this.options.ajaxOptions)).addEvent('onComplete', this.queryResponse.bind(this));
+		},
+
+		queryResponse: function(response) {
+			this.parent();
+			this.update(response);
+		}
+	});
+</script>

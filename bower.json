@@ -1,0 +1,26 @@
+{
+  "name": "dispatch-autocomplete",
+  "version": "0.0.0",
+  "authors": [
+    "Eric Satterwhtie <esatterwhite@wi.rr.com>"
+  ],
+  "keywords": [
+    "autocomplete",
+    "polymer"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.5",
+    "core-field": "Polymer/core-field#~0.5.0",
+    "paper-input": "Polymer/paper-input#~0.5.5",
+    "core-ajax": "Polymer/core-ajax#~0.5.5"
+  }
+}

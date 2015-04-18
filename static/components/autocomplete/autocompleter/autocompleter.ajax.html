@@ -1,0 +1,52 @@
+<link rel="import" href="../../lib/mootools.html">
+<script>
+var Request;
+
+/**
+ * DESCRIPTION
+ * @class module:NAME.Thing
+ * @param {TYPE} NAME DESCRIPTION
+ * @example var x = new NAME.Thing({});
+ */
+Request = new Class(/** @lends module:NAME.Thing.prototype */{
+
+	Extends: Autocompleter,
+
+	options: {/*
+		indicator: null,
+		indicatorClass: null,
+		onRequest: $empty,
+		onComplete: $empty,*/
+		postData: {},
+		ajaxOptions: {},
+		postVar: 'value'
+
+	},
+
+	query: function(){
+		var data = $unlink(this.options.postData) || {};
+		data[this.options.postVar] = this.queryValue;
+		var indicator = $(this.options.indicator);
+		if (indicator) indicator.setStyle('display', '');
+		var cls = this.options.indicatorClass;
+		if (cls) this.element.addClass(cls);
+		this.fireEvent('onRequest', [this.element, this.request, data, this.queryValue]);
+		this.request.send({'data': data});
+	},
+
+	/**
+	 * queryResponse - abstract
+	 *
+	 * Inherated classes have to extend this function and use this.parent()
+	 */
+	queryResponse: function() {
+		var indicator = $(this.options.indicator);
+		if (indicator) indicator.setStyle('display', 'none');
+		var cls = this.options.indicatorClass;
+		if (cls) this.element.removeClass(cls);
+		return this.fireEvent('onComplete', [this.element, this.request]);
+	}
+});
+
+Autocompleter.Remote = Autocompleter.Ajax = Request;
+</script>

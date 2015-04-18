@@ -1,0 +1,72 @@
+<link rel="import" href="/components/lib/mootools.html"/>
+<link rel="import" href="/core-field/core-field.html"/>
+<link rel="import" href='./autocompleter/autocompleter.html' />
+<link rel="import" href='./autocompleter/autocompleter.ajax.html' />
+<link rel="import" href='./autocompleter/autocompleter.places.html' />
+
+<polymer-element name="places-autocomplete">
+	<template>
+		<style>
+		#completer{
+			height:30px;
+			padding-top:4px;
+		}
+		</style>
+		<link rel="stylesheet" href='./autocompleter/autocompleter.css' />
+			<core-field layout vertical left id="field">
+				<div>
+					<input placeholder="Search" id="completer" style="width:500px"></input>
+				</div>
+				<div>
+					<google-map id="gmap" zoom="12"></google-map>
+				</div>
+				<content></content>
+			</core-field>
+	</template>
+	<script>
+		Polymer("places-autocomplete",{
+			ready: function( ){
+				var frisco = new google.maps.LatLng(37.773972, -122.431297);
+				var service = new google.maps.places.PlacesService(this.$.gmap);
+				var that = this;
+				new Autocompleter.Places(service, frisco, this.$.completer,{
+					relative:true
+					,postVar:'query'
+					,emptyChoices:function(){
+						new Element('li',{
+							html:"No Matches Found"
+						}).inject( this.choices );
+						this.showChoices();
+					}
+					,onSelection: function( el, selected, txt, input ){
+						el.set('value','')
+					}
+					,injectChoice: function( token ){
+						var choice = new Element('li');
+						new Element('div',{
+						    html: this.markQueryValue( token.name )
+						}).inject( choice )
+						new Element('div',{
+						    text:(token.types[0]  || token.rating ).replace(/_/,' ' )
+						    ,"class":"small"
+						}).inject(choice, 'bottom')
+						choice.inputValue = token.name;
+						choice.addEvent('click', function(e){
+							e.preventDefault();
+							 var marker = new google.maps.Marker({
+							     position: token.geometry.location,
+							     animation: google.maps.Animation.DROP,
+							     title:token.name
+							 });
+
+							 // To add the marker to the map, call setMap();
+							 marker.setMap(that.$.gmap.map);
+						}.bind( this ))
+						
+						this.addChoiceEvents(choice).inject(this.choices);
+					}
+				});	
+			}
+		})
+	</script>
+</polymer-element>

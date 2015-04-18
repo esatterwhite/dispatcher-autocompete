@@ -1,0 +1,29 @@
+<link rel="import" href="../../lib/mootools.html">
+<script>
+var Local;
+
+/**
+ * DESCRIPTION
+ * @class module:NAME.Thing
+ * @param {TYPE} NAME DESCRIPTION
+ * @example var x = new NAME.Thing({});
+ */
+Local = new Class(/** @lends module:NAME.Thing.prototype */{
+	Extends: Autocompleter,
+
+	options: {
+		minLength: 0,
+		delay: 200
+	},
+
+	initialize: function(element, tokens, options) {
+		this.parent(element, options);
+		this.tokens = tokens;
+	},
+
+	query: function() {
+		this.update(this.filter());
+	}
+});
+Autocompleter.Local = Local;
+</script>
