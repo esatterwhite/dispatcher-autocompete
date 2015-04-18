@@ -77,6 +77,8 @@
 
 							 // To add the marker to the map, call setMap();
 							 marker.setMap(that.$.gmap.map);
+							 map.map.setZoom( 13 )
+							 map.map.panTo( token.geometry.location )
 						}.bind( this ))
 						
 						this.addChoiceEvents(choice).inject(this.choices);
