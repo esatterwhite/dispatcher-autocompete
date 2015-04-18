@@ -25,11 +25,16 @@
 	</template>
 	<script>
 		Polymer("places-autocomplete",{
-			ready: function( ){
-				var frisco = new google.maps.LatLng(37.773972, -122.431297);
-				var service = new google.maps.places.PlacesService(this.$.gmap);
-				var that = this;
-				new Autocompleter.Places(service, frisco, this.$.completer,{
+			domReady: function( ){
+				var map     = this.$.gmap 
+				  , frisco  = new google.maps.LatLng(map.latitude, map.longitude)
+				  , service = new google.maps.places.PlacesService( map )
+				  , that    = this
+				  , element = this.$.completer
+				  ;
+
+				element.focus();
+				new Autocompleter.Places(service, frisco, element,{
 					relative:true
 					,postVar:'query'
 					,emptyChoices:function(){
@@ -42,17 +47,28 @@
 						el.set('value','')
 					}
 					,injectChoice: function( token ){
-						var choice = new Element('li');
+						var choice, type;
+						choice = new Element('li');
+
 						new Element('div',{
 						    html: this.markQueryValue( token.name )
 						}).inject( choice )
-						new Element('div',{
-						    text:(token.types[0]  || token.rating ).replace(/_/,' ' )
+
+						type = new Element('div',{
+						    text:(token.types[0]  || token.rating ).replace(/_/g,' ' )
 						    ,"class":"small"
 						}).inject(choice, 'bottom')
+
+						new Element('img',{
+							src:token.icon,
+							height:'12px',
+							styles:{
+								padding:'0 4px'
+							}
+						}).inject( type,'top' );
+
 						choice.inputValue = token.name;
 						choice.addEvent('click', function(e){
-							e.preventDefault();
 							 var marker = new google.maps.Marker({
 							     position: token.geometry.location,
 							     animation: google.maps.Animation.DROP,
