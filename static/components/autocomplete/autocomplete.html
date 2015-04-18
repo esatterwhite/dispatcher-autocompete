@@ -56,7 +56,7 @@
 						}).inject( choice )
 
 						type = new Element('div',{
-						    text:(token.types[0]  || token.rating ).replace(/_/g,' ' )
+						    text:(Array.from(token.types)[0]  || token.rating ).replace(/_/g,' ' )
 						    ,"class":"small"
 						}).inject(choice, 'bottom')
 
