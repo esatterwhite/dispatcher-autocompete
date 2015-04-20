@@ -1,5 +1,7 @@
 App is running on [heroku](http://dispatcher-completer.herokuapp.com)
 
+**NOTE:** This is implemented using Polymerjs, and requires a modern browser - Probably only chrome.
+
 ## Dispatcher Coding Challenge II
 
 ### Task
